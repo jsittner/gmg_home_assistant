@@ -87,9 +87,9 @@ class GmgGrill(ClimateEntity):
 
     def set_hvac_mode(self, hvac_mode: str) -> None:
         """Set the operation mode"""
-        if hvac_mode == HVAC_MODE_HEAT:
+        if hvac_mode == HVACMode.HEAT:
             self._grill.power_on()
-        elif hvac_mode == HVAC_MODE_OFF:
+        elif hvac_mode == HVACMode.OFF:
             self._grill.power_off()
         elif hvac_mode == HVAC_MODE_FAN_ONLY:
             self._grill.power_on_cool()
@@ -105,7 +105,7 @@ class GmgGrill(ClimateEntity):
     @property
     def supported_features(self):
         """Return the list of supported features."""
-        return (SUPPORT_TARGET_TEMPERATURE)
+        return (ClimateEntityFeature.TARGET_TEMPERATURE)
     
     @property
     def icon(self):
@@ -114,17 +114,17 @@ class GmgGrill(ClimateEntity):
     @property
     def hvac_modes(self) -> List[str]:
         """Return the supported operations."""
-        return [HVAC_MODE_HEAT, HVAC_MODE_FAN_ONLY, HVAC_MODE_OFF]
+        return [HVACMode.HEAT, HVAC_MODE_FAN_ONLY, HVACMode.OFF]
 
     @property
     def hvac_mode(self):
         """Return current HVAC operation."""
         if self._state['on'] == 1:
-            return HVAC_MODE_HEAT
+            return HVACMode.HEAT
         elif self._state['on'] == 2:
             return HVAC_MODE_FAN_ONLY
 
-        return HVAC_MODE_OFF
+        return HVACMode.OFF
 
     @property
     def name(self)  -> None:
@@ -212,7 +212,7 @@ class GmgGrillProbe(ClimateEntity):
     @property
     def hvac_modes(self) -> List[str]:
         """Return the supported operations."""
-        return [HVAC_MODE_OFF]
+        return [HVACMode.OFF]
 
     @property
     def hvac_mode(self):
@@ -220,14 +220,14 @@ class GmgGrillProbe(ClimateEntity):
 
         # Probe temp is 89 when it is not plugged in... need to find out if better way to find if connected or not..
         if self._state['on'] == 1 and self._state[f'probe{self._probe_count}_temp'] != 89:
-            return HVAC_MODE_HEAT
+            return HVACMode.HEAT
 
-        return HVAC_MODE_OFF
+        return HVACMode.OFF
 
     @property
     def supported_features(self):
         """Return the list of supported features."""
-        return (SUPPORT_TARGET_TEMPERATURE)
+        return (ClimateEntityFeature.TARGET_TEMPERATURE)
     
     @property
     def icon(self):
