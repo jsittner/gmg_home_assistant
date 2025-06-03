@@ -10,10 +10,15 @@ import logging
 from typing import List, Optional
 from homeassistant.components.climate import ClimateEntity
 from homeassistant.components.climate.const import (
-    HVAC_MODE_OFF, HVAC_MODE_HEAT, SUPPORT_TARGET_TEMPERATURE, HVAC_MODE_HEAT, HVAC_MODE_OFF, HVAC_MODE_FAN_ONLY)
+    HVACMode,
+    ClimateEntityFeature,
+)
 from homeassistant.const import (
     ATTR_TEMPERATURE,
-    TEMP_FAHRENHEIT)
+    UnitOfTemperature,
+)
+
+
 
 _LOGGER = logging.getLogger(__name__)
 
